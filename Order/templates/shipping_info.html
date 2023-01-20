@@ -1,0 +1,137 @@
+{% extends 'base.html' %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block title %}
+  <title>Superb, premium HTML5 &amp; CSS3 template</title>
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/internal.css' %}">
+{% endblock %}
+<!-- Google Fonts -->
+
+<body class="onestepcheckout-index-index inner-page">
+<div id="page"> 
+  
+  {% block content %}
+    <!-- Main Container -->
+    <section class="main-container col2-right-layout bounceInUp animated">
+      <div class="main container">
+        <div class="row">
+          <div class="col-main col-sm-9">
+            <div class="page-title">
+              <h1>Shipping Information</h1>
+            </div>
+            <ol class="one-page-checkout" id="checkoutSteps">
+              <li id="opc-shipping" class="section allow active">
+                <div id="checkout-step-shipping" class="a-item">
+                  <form id="co-shipping-form" method="POST">
+                    {% include 'messages.html' %}
+                    {% csrf_token %}
+                    {% if form.errors %}
+                      <div class="alert alert-danger alert-dismissible" role="alert">
+                          <div id="form_errors">
+                              {% for key, value in form.errors.items %}
+                                  <strong>{{ value }}</strong>
+                              {% endfor %}
+                          </div>
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                    {% endif %}
+                    <ul class="row form-list">
+                      <li class="col-md-6">
+                        {{ form.first_name.label }}
+                        {{ form.first_name }}
+                      </li>
+                      <li class="col-md-6">
+                        {{ form.last_name.label }}
+                        {{ form.last_name }}
+                      </li>
+                      <li class="col-md-6">
+                        {{ form.telephone.label }}
+                        {{ form.telephone }}
+                      </li>
+                      <li class="col-md-6">
+                        {{ form.email.label }}
+                        {{ form.email }}
+                      </li>
+                      <li class="col-md-6">
+                        {{ form.country.label }}
+                        {{ form.country }}
+                      </li>
+                      <li class="col-md-6">
+                        {{ form.city.label }}
+                        {{ form.city }}
+                      </li>
+                      <li class="col-md-6">
+                        {{ form.province.label }}
+                        {{ form.province }}
+                      </li>
+                      <li class="col-md-6">
+                        {{ form.zip.label }}
+                        {{ form.zip }}
+                      </li>
+                      <li class="col-md-12">
+                        {{ form.street_address.label }}
+                        {{ form.street_address }}
+                      </li>
+                    <div class="buttons-set">
+                      <button type="submit" class="button submit" style="margin-left: 15px;"><span>Save Address</span></button>
+                    </div>
+                  </form>
+                </div>
+              </li>
+            </ol>
+          </div>
+          <aside class="col-right sidebar col-sm-3">
+            <div class="block block-progress">
+              <div class="block-title ">Your Checkout</div>
+              <div class="block-content">
+                <dl>
+                  <dt class="complete"> Billing Address <span class="separator">|</span> <a href="{% url 'billing_info' %}">Change</a> </dt>
+                  <dd class="complete">
+                    <address>
+                      {{ billing_address.first_name }} {{  billing_address.last_name }}<br>
+                      {{ billing_address.telephone }}<br>
+                      {{ billing_address.email }}<br>
+                      {{ billing_address.street_address }}<br>
+                      {{ billing_address.country }}<br>
+                      {{ billing_address.city }}<br>
+                      {{ billing_address.state }}
+                      {{ billing_address.zip }}
+                    </address>
+                  </dd>
+                  <dt class="complete"> Shipping Address <span class="separator">|</span> <a href="{% url 'shipping_info' %}">Change</a> </dt>
+                  <dd class="complete">
+                    <address>
+                      {{ shipping_address.first_name }} {{  shipping_address.last_name }}<br>
+                      {{ shipping_address.telephone }}<br>
+                      {{ shipping_address.email }}<br>
+                      {{ shipping_address.street_address }}<br>
+                      {{ shipping_address.country }}<br>
+                      {{ shipping_address.city }}<br>
+                      {{ shipping_address.state }}
+                      {{ shipping_address.zip }}
+                    </address>
+                  </dd>
+                </dl>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+    <!-- Main Container end --> 
+  {% endblock %}
+</div>
+
+
+<!-- JavaScript --> 
+
+{% block js %}
+  <script type="text/javascript" src="{% static 'js/parallax.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/jquery.flexslider.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/cloud-zoom.js' %}"></script>
+{% endblock %}

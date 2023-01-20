@@ -1,0 +1,151 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>Superb premium HTML5 &amp; CSS3 template</title>
+{% endblock %}
+
+{% block icon %}
+  <link rel="icon" href="http://demo.magikthemes.com/skin/frontend/base/default/favicon.ico" type="image/x-icon" />
+  <link rel="shortcut icon" href="http://demo.thmthemes.com/skin/frontend/base/default/favicon.ico" type="image/x-icon" />
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/blogmate.css' %}">
+{% endblock %}
+
+<body class="blogmate-index-index rtl inner-page">
+<div id="page">  
+  <!-- Main Container -->
+  {% block content %}
+    <section class="main-container col2-right-layout bounceInUp animated">
+      <div class="main container">
+        <div class="row">
+          <div class="col-main col-sm-9">
+            <div class="blog-wrapper latest-blog" id="main">
+              <div class="site-content" id="primary">
+                <div role="main" id="content">
+                  <div class="blog_post">
+                    <div class="thumbnail">
+                      <h2><a href="{{ object.get_absolute_url }}">{{ object.title }}</a></h2>
+                      <div class="featured-img">
+                        <img src="{{ object.image.url }}" alt="blog post">
+                      </div>  
+                    </div>
+                    <div class="entry-meta">
+                      <a href="{% url 'blogs' %}?author={{object.author.author_slug}}">
+                        <span class="author-avatar byline"><img alt="" src="{{ object.author.author_image.url }}" class="avatar avatar-96 photo">{{ object.author }}</span> <span class="timestamp">{{ object.date|date:"F j, Y"}}</span>
+                      </a>
+                    </div>
+                    <div class="entry-content">
+                      <p>{{ object.desc }}</p>
+                    </div>   
+                  </div>
+                  <div class="comment-content wow bounceInUp animated">
+                    <div class="comments-wrapper">
+                      <h3> Comments </h3>
+                      <ul class="commentlist">
+                        {% for comment in comments %}
+                          <li class="comment">
+                            <div class="comment-wrapper" >
+                              <div class="comment-author vcard">
+                                <span class="author">{{ comment.name }}</span> </div>
+                              <!--comment-author vcard-->
+                              <div class="comment-meta">
+                                <time datetime="2014-07-10T07:26:28+00:00" class="entry-date">{{ comment.date|date:"D, N j, Y"}} {{ comment.date|time:"h:i:s a"}}</time>.
+                              </div>
+                              <!--comment-meta-->
+                              <div class="comment-body">{{ comment.comment }}</div>
+                            </div>
+                          </li>
+                        {% endfor %}
+                      </ul>
+                      <!--commentlist--> 
+                    </div>
+                    <!--comments-wrapper-->
+                    <div class="comments-form-wrapper clearfix">
+                      <h3>Leave A reply</h3>
+                      <form method="POST" class="comment-form" id="postComment">
+                        {% csrf_token %}
+                        <div class="field">
+                          {{ form.name.label }}
+                          <br>
+                          {{ form.name }}
+                        </div>
+                        <div class="field">
+                          {{ form.email.label }}
+                          <br>
+                          {{ form.email }}
+                        </div>
+                        <div class="field">
+                          {{ form.comment.label }}
+                          {{ form.comment }}
+                        </div>
+                        <div style="width:96%" class="button-set">
+                          <input type="hidden" value="1" name="blog_id">
+                          <input type="submit" value = "ADD COMMENT" class="bnt-comment">
+                        </div>
+                      </form>
+                    </div>
+                    <!--comments-form-wrapper clearfix--> 
+                  </div>
+                </div>
+              </div>
+            </div>
+            <br>
+          </div>
+          <aside class="col-right sidebar col-sm-3">
+            <div role="complementary" class="widget_wrapper13" id="secondary">
+              <div class="popular-posts widget widget__sidebar" id="recent-posts-4">
+                <h3 class="widget-title">Most Popular Posts</h3>
+                <div class="widget-content">
+                  <ul class="posts-list unstyled clearfix">
+                    {% for p_post in p_posts %}
+                      <li>
+                        <figure class="featured-thumb"> <a href="{{ p_post.get_absolute_url}}"> <img width="80" height="53" alt="blog image" src="{{ p_post.image.url }}"></a></figure>
+                        <h4><a title="Pellentesque posuere" href="{{ p_post.get_absolute_url}}">{{ p_post.title }}</a></h4>
+                        <p class="post-meta"><i class="icon-calendar"></i>
+                          <time datetime="2014-07-10T07:09:31+00:00" class="entry-date">{{ p_post.date|date:"N j, Y" }}</time>. 
+                        </p>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+              <div class="popular-posts widget widget__sidebar" id="recent-posts-4">
+                <h3 class="widget-title">Related Blogs</h3>
+                <div class="widget-content">
+                  <ul class="posts-list unstyled clearfix">
+                    {% for r_blog in r_blogs %}
+                      <li>
+                        <figure class="featured-thumb"> <a href="{{ r_blog.get_absolute_url}}"> <img width="80" height="53" alt="blog image" src="{{ r_blog.image.url }}"></a></figure>
+                        <h4><a title="Pellentesque posuere" href="{{ r_blog.get_absolute_url}}">{{ r_blog.title }}</a></h4>
+                        <p class="post-meta"><i class="icon-calendar"></i>
+                          <time datetime="2014-07-10T07:09:31+00:00" class="entry-date">{{ r_blog.date|date:"N j, Y" }}</time>. 
+                        </p>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+              <div class="popular-posts widget widget_categories" id="categories-2">
+                <h3 class="widget-title">Categories</h3>
+                <ul>
+                  {% for category in categories %}
+                    <li class="cat-item cat-item-19599"><a href="{% url 'blogs' %}?category={{category.name}}">{{ category }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  {% endblock %}
+  <!-- Main Container End --> 
+</div>
+
+{% block js %}
+  <script type="text/javascript" src="{% static 'js/parallax.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.flexslider.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/cloud-zoom.js' %}"></script>
+{% endblock %}

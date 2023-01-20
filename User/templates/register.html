@@ -1,0 +1,95 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>Register</title>
+{% endblock %}
+
+{% block css %}
+<link rel="stylesheet" type="text/css" href="{% static 'css/internal.css' %}">
+{% endblock %}
+
+<body class="customer-account-login inner-page">
+  <div id="page"> 
+    {% block content %}
+  <!-- Main Container -->
+  <section class="main-container col1-layout bounceInUp animated">
+    <div class="main container">
+      <div class="account-login">
+        <div class="page-title">
+          <h1>Login or Create an Account</h1>
+        </div>
+        <fieldset class="col2-set">
+          <legend>Login or Create an Account</legend>
+          <div class="col-1 new-users"><strong>Registered Customers</strong>
+            <div class="content">
+              <p>By creating an account with our store, you will be able to move through the checkout process faster, store multiple shipping addresses, view and track your orders in your account and more.</p>
+              <div class="buttons-set">
+                <button class="button create-account" ><span>Login</span></button>
+              </div>
+            </div>
+          </div>
+          
+          <div class="col-2 registered-users"><strong>New Customers</strong>
+            <form method="POST">
+              {% csrf_token %}
+              {% include 'messages.html' %}
+              {% if form.errors %}
+              <div class="alert alert-danger">
+                {{ form.errors }}
+              </div>
+              {% endif %}
+            <div class="content">
+              <p>If you have an account with us, please log in.</p>
+              <ul class="form-list">
+                <li class="col-md-6">
+                  <!-- {{ register_form }}  -->
+                  {{ form.first_name.label }}
+                  {{ form.first_name }}
+                </li>
+                <li class="col-md-6">
+                  <!-- {{ register_form }}  -->
+                  {{ form.last_name.label }}
+                  {{ form.last_name }}
+                </li>
+                <li class="col-md-6">
+                  <!-- {{ register_form }}  -->
+                  {{ form.username.label }}
+                  {{ form.username }}
+                </li>
+                <li class="col-md-6">
+                  {{ form.email.label }}
+                  {{ form.email }}
+                </li>
+                <li class="col-md-6">
+                  {{ form.password1.label }}
+                  {{ form.password1 }}
+                </li>
+                <li class="col-md-6">
+                  {{ form.password2.label }}
+                  {{ form.password2 }}
+                </li>
+              </ul>
+              <p class="required">* Required Fields</p>
+              <div class="buttons-set">
+                <button id="send2" type="submit" class="button login"><span>Register</span></button>
+            </div>
+          </form>
+        </fieldset>
+      </div>
+      <br>
+      <br>
+      <br>
+      <br>
+      <br>
+    </div>
+  </section>
+  <!-- Main Container End -->  
+    {% endblock %}
+  </div>
+
+  {% block js %}
+  <script type="text/javascript" src="{% static 'js/parallax.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/jquery.flexslider.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/cloud-zoom.js' %}"></script>
+{% endblock %}
+

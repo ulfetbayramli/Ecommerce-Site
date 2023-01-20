@@ -1,0 +1,86 @@
+# SOME DESCRIPTIVE TITLE.
+# Copyright (C) YEAR THE PACKAGE'S COPYRIGHT HOLDER
+# This file is distributed under the same license as the PACKAGE package.
+# FIRST AUTHOR <EMAIL@ADDRESS>, YEAR.
+# 
+#, fuzzy
+msgid ""
+msgstr ""
+
+#: .\Core\templates\base.html:51
+msgid "Languages" 
+msgstr "Dillər"
+
+#: .\Core\templates\base.html:72
+msgid "My Cart"
+msgstr "Səbətim"
+
+#: .\Core\templates\base.html:141
+msgid "Log Out"
+msgstr "Çıxış"
+
+#: .\Core\templates\base.html:166
+msgid "Home"
+msgstr "Ana Səhifə"
+
+#: .\Core\templates\base.html:167
+msgid "Pages"
+msgstr "Səhifələr"
+
+#: .\Core\templates\base.html:196
+msgid "About Us"
+msgstr "Haqqımızda"
+
+#: .\Core\templates\base.html:197
+msgid "Blogs"
+msgstr "Bloqlar"
+
+#: .\Core\templates\base.html:200
+msgid "Women"
+msgstr "Qadın"
+
+#: .\Core\templates\base.html:209
+msgid "Men"
+msgstr "Kişi"
+
+#: .\Core\templates\base.html:218
+msgid "Kids"
+msgstr "Uşaq"
+
+#: .\Core\templates\base.html:227
+msgid "FAQ"
+msgstr "FAQ"
+
+#: .\Core\templates\index.html:315
+msgid "SuperB Products"
+msgstr "SuperB Məhsulları"
+
+#: .\Core\templates\index.html:363
+msgid "Best Seller"
+msgstr "Ən Çox Satılan"
+
+#: .\Core\templates\index.html:364
+msgid "New Arrivals"
+msgstr "Yeni Gələnlər"
+
+#: .\Core\templates\index.html:365
+msgid "Featured"
+msgstr "Seçilmişlər"
+
+#: .\Core\templates\index.html:466
+msgid "Latest Blogs"
+msgstr " Ən Son Bloqlar"
+
+#: .\SuperB\settings.py:219
+msgid "Azerbaijan"
+msgstr "Azərbaycanca"
+
+#: .\SuperB\settings.py:220
+msgid "English"
+msgstr "İngiliscə"
+
+#~ msgid "admin/"
+#~ msgstr "admin"
+
+#~ msgid "Log In"
+#~ msgstr "Giriş"

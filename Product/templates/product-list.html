@@ -1,0 +1,180 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>Superb, premium HTML5 &amp; CSS3 template</title>
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/jquery.bxslider.css' %}">
+{% endblock %}
+
+
+<body class="inner-page">
+  <div id="page">
+    {% block content %}
+  <!-- Breadcrumbs -->
+  <div class="breadcrumbs">
+    <div class="container">
+      <div class="row">
+        <div class="col-xs-12">
+
+		  <ul class="breadcrumb">
+	<li><a href="#">Home</a></li>
+	<li><a href="#">Vehicles</a></li>
+	<li><a href="#">Vans</a></li>
+	<li><a href="#">Camper Vans</a></li>
+	<li><a href="#">1989 VW Westfalia Vanagon</a></li>
+</ul>
+        </div>
+      </div>
+    </div>
+  </div>
+  <!-- Breadcrumbs End --> 
+<!-- Main Container -->
+
+<section class="main-container col2-left-layout bounceInUp animated">
+  <div class="container">
+    
+    <div class="row">
+      <div class="col-main col-sm-9 col-sm-push-3">
+	  <div class="category-image"><img title="Sofas " alt="Sofas " src="{% static 'images/category-banner.jpg' %}"> </div>
+        <article class="col-main">
+          <div class="page-title">
+            <h1>Tops & Tees</h1>
+          </div>
+        
+          <div class="toolbar">
+            <div class="sorter">
+                <div class="view-mode"> <a href="grid.html" title="Grid" class="button button-grid">&nbsp;</a>&nbsp; <span title="List" class="button button-active button-list">&nbsp;</span>&nbsp; </div>
+              </div>
+            <div id="sort-by">
+              <label class="left">Sort By: </label>
+              <ul>
+                <li><a href="#">Position<span class="right-arrow"></span></a>
+                  <ul>
+                    <li><a href="#">Name</a></li>
+                    <li><a href="#">Price</a></li>
+                    <li><a href="#">Position</a></li>
+                  </ul>
+                </li>
+              </ul>
+              <a class="button-asc left" href="#" title="Set Descending Direction"><span class="top_arrow"></span></a> </div>
+            <div class="pager">
+              <div id="limiter">
+                <label>View: </label>
+                <ul>
+                  <li><a href="#">15<span class="right-arrow"></span></a>
+                    <ul>
+                      <li><a href="#">20</a></li>
+                      <li><a href="#">30</a></li>
+                      <li><a href="#">35</a></li>
+                    </ul>
+                  </li>
+                </ul>
+              </div>
+              <div class="pages">
+                <label>Page:</label>
+                <ul class="pagination">
+                  <li><a href="#">&laquo;</a></li>
+                  <li class="active"><a href="#">1</a></li>
+                  <li><a href="#">2</a></li>
+                  <li><a href="#">3</a></li>
+                  <li><a href="#">4</a></li>
+                  <li><a href="#">5</a></li>
+                  <li><a href="#">&raquo;</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div class="category-products">
+            <ol class="products-list" id="products-list">
+              {% for product in products %}
+                <li class="item even">
+                  <div class="product-image"> <a href="{% url 'product_detail' product.pk %}" title="Microsoft Natural Keyboard"> <img  class="small-image" src="{{ product.cover_image.url }}" alt="{{ product.product.name }}"> </a> </div>
+                  <div class="product-shop">
+                    <h2 class="product-name"><a href="{% url 'product_detail' product.pk %}" title="{{ product.product.name }}">{{ product.product.name }}</a></h2>
+                    <div class="desc std">
+                      <p>{{ product.product.overview }}<a class="link-learn" title="" href="{% url 'product_detail' product.pk %}">Learn More</a></p>
+                    </div>
+                    <div class="price-box">
+                      {% if product.product.in_sale %} 
+                      <span class="regular-price"> <span class="price">${{ product.product.new_price }}</span> </span>
+                      {% else %}
+                      <p class="special-price"> <span class="price-label"></span> <span class="price"> ${{ product.product.price  }}</span> </p>
+                      {% endif %}
+                    </div>
+                    <div class="actions">
+                      <button class="button btn-cart ajx-cart" onclick = "functionAddToBasket($(this).attr('data'))" title="Add to Cart" type="button" data="{{ product.pk }}"><span>Add to Cart</span></button>
+                      <span class="add-to-links" onclick = "functionAddToWishlist($(this).attr('data'))" data="{{ product.pk }}"> <button type="button" title="Add to Wishlist" class="button link-wishlist"><span>Add to Wishlist</span></button> </span> </div>
+                  </div>
+                </li>
+              {% endfor %}
+            </ol>
+          </div>
+        </article>
+        <!--	///*///======    End article  ========= //*/// --> 
+      </div>
+      <div class="col-left sidebar col-sm-3 col-xs-12 col-sm-pull-9">
+          <aside class="col-left sidebar">
+            <div class="side-nav-categories">
+              <div class="block-title"> Categories </div>
+              <!--block-title--> 
+              <!-- BEGIN BOX-CATEGORY -->
+              <div class="box-content box-category">
+                <ul>
+                  {% for category in categories %}
+                    <li> <a class="category-field" data="{{ category.id }}" href="#?product__category={{category.name}}">{{ category.name }}</a> <span class="subDropdown plus"></span>
+                      <ul class="level0_455" style="display:none">
+                        {% for s_category in s_categories %}
+                          {% if s_category.p_category == category %}
+                            <li><a class="category-field" data="{{ s_category.id }}" href="#?product__category={{category.name}}-{{s_category.name}}">{{ s_category.name }}</a></li>
+                          {% endif %}
+                        {% endfor %}
+                      </ul>
+                      <!--level0--> 
+                    </li>
+                  {% endfor %}
+                  <!--level 0-->
+                </ul>
+              </div>
+              <!--box-content box-category--> 
+            </div>
+
+            <div class="block block-layered-nav">
+              <div class="block-title">Shop By</div>
+              <div class="block-content">
+                <dl id="narrow-by-list">
+                  <dt class="even">Manufacturer</dt>
+                  <dd class="even">
+                    <ol>
+                      {% for manufacturer in manufacturers %}
+                        <li class="manufacturer-category" data = '{{ manufacturer.name }}'>{{ manufacturer.name }} </li>
+                      {% endfor %}
+                    </ol>
+                  </dd>
+                  <dt class="odd">Color</dt>
+                  <dd class="odd">
+                    <ol>
+                      {% for color in colors %}
+                        <li class="color-category" data = '{{ color.color_id__name }}'>{{ color.color_id__name }} ({{ color.count }}) </li> 
+                      {% endfor %}
+                    </ol>
+                  </dd>
+                </dl>
+              </div>
+            </div>
+
+          </aside>
+        </div>
+    </div>
+  </div>
+</section>
+<!-- Main Container End --> 
+
+{% endblock %}
+{% block js %}
+  <script type="text/javascript" src="{% static 'js/parallax.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/slider.js' %}"></script> 
+  <script src="{% static 'js/product_list.js' %}"></script>
+
+{% endblock %}

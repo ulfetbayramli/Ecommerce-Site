@@ -1,0 +1,30 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>FAQ</title>
+{% endblock %}
+
+<!-- CSS Style -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/internal.css' %}">
+{% endblock %}
+
+<body>
+  <div class="inner-page">
+  <!-- Home Slider Block -->
+    {% block content %}
+    {% for p in product_list %}
+      <h1>
+        {{ p.name }}
+        {{ p.price }}
+      </h1>
+      {% endfor %}
+    {% endblock %}
+
+  </div>
+
+{% block js %}
+  <script type="text/javascript" src="{% static 'js/parallax.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.flexslider.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/cloud-zoom.js' %}"></script>
+{% endblock %}

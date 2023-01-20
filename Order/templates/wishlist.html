@@ -1,0 +1,104 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>Wishlist</title>
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/internal.css' %}">
+{% endblock %}
+
+<body class="customer-account-index customer-account inner-page">
+  <div id="page"> 
+    {% block content %}
+      <!-- Main Container -->
+      <section class="main-container col2-right-layout">
+        <div class="main container">
+          <div class="row">
+            <div class="col-main col-sm-9">
+              <div class="my-account">
+                <div class="page-title">
+                  <h1>My Wishlist</h1>
+                </div>
+                <div class="my-wishlist">
+                  <form method="post" action="#" id="wishlist-view-form">
+                    <fieldset>
+                      <input type="hidden" value="ROBdJO5tIbODPZHZ" name="">
+                      <div class="table-responsive">
+                        <table id="wishlist-table" class="clean-table linearize-table data-table">
+                          <thead>
+                            <tr class="first last">
+                              <th class="customer-wishlist-item-image"></th>
+                              <th class="customer-wishlist-item-info"></th>
+                              <th class="customer-wishlist-item-price">Price</th>
+                              <th class="customer-wishlist-item-cart">action</th>
+                              <th class="customer-wishlist-item-remove">Delete</th>
+                            </tr>
+                          </thead>
+                          <tbody>
+                              {% for item in items %}
+                                <tr id="item_31" class="first odd">
+                                  <td class="wishlist-cell0 customer-wishlist-item-image"><a title="Softwear Women's Designer" href="{% url 'product_detail' item.pk %}" class="product-image"> <img width="150" height="150" alt="Softwear Women's Designer" src="{{ item.cover_image.url }}"> </a></td>
+                                  <td class="wishlist-cell1 customer-wishlist-item-info"><h3 class="product-name"><a title="Softwear Women's Designer" href="{% url 'product_detail' item.pk %}">{{ item.product.name }}</a></h3>
+                                    <div class="description std">
+                                      <div class="inner">{{ item.product.overview }}</div>
+                                    </div>
+                                  <td data-rwd-label="Price" class="wishlist-cell3 customer-wishlist-item-price"><div class="cart-cell">
+                                    {% if item.product.in_sale %}
+                                      <p class="special-price"> <span class="price-label"></span> <span class="price"> {{ item.product.new_price|stringformat:".2f"  }}</span> </p> <p class="old-price"> <span class="price-label"></span> <span class="price"> {{ item.product.price|stringformat:".2f"  }} </span> </p>
+                                    {% else %}
+                                      <p class="special-price"> <span class="price-label"></span> <span class="price"> {{ item.product.price|stringformat:".2f"  }}</span> </p>
+                                    {% endif %}
+                                  </td>
+                                  <td class="wishlist-cell4 customer-wishlist-item-cart"><div class="cart-cell">
+                                      <button class="button btn-cart" title="Add to Cart" onclick = "functionAddToBasket($(this).attr('data'))" type="button" data="{{ item.id }}"><span><span>Add to Cart</span></span></button>
+                                    </div>
+                                  <td class="wishlist-cell5 customer-wishlist-item-remove last"><a class="remove-item btn" title="Clear Cart" onclick = "removeWishlist($(this).attr('data'))" href="{% url 'wishlist' %}" data="{{ item.id }}"><span><span></span></span></a></td>
+                                </tr>
+                              {% endfor %}
+                          </tbody>
+                        </table>
+                      </div>
+                    </fieldset>
+                  </form>
+                </div>
+                <div class="buttons-set">
+                  <p class="back_link"><a href="{% url 'product_list' %}"><small>« </small>Back</a></p>
+                </div>
+              </div>
+            </div>
+            <aside class="col-right sidebar col-sm-3">
+              <div class="block block-account">
+                <div class="block-title">My Account</div>
+                <div class="block-content">
+                  <ul>
+                    <li><a href="#">Account Dashboard</a></li>
+                    <li><a href="#">Account Information</a></li>
+                    <li><a href="#">Address Book</a></li>
+                    <li><a href="#">My Orders</a></li>
+                    <li><a href="#">Billing Agreements</a></li>
+                    <li><a href="#">Recurring Profiles</a></li>
+                    <li><a href="#">My Product Reviews</a></li>
+                    <li><a href="#">My Tags</a></li>
+                    <li class="current"><a href="#">My Wishlist</a></li>
+                    <li><a href="#">My Downloadable</a></li>
+                    <li class="last"><a href="#">Newsletter Subscriptions</a></li>
+                  </ul>
+                </div>
+              </div>
+            </aside>
+          </div>
+        </div>
+      </section>
+      <br>
+      <!-- Main Container End --> 
+    {% endblock %}
+  </div>
+
+{% block js %}
+  <script type="text/javascript" src="{% static 'js/parallax.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/jquery.flexslider.js' %}"></script>  
+  <script type="text/javascript" src="{% static 'js/cloud-zoom.js' %}"></script>
+  <script src="{% static 'js/wishlist.js' %}"></script>
+{% endblock %}
+

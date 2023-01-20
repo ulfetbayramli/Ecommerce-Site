@@ -1,0 +1,81 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>Login</title>
+{% endblock %}
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/internal.css' %}">
+{% endblock %}
+
+<body class="customer-account-login inner-page">
+  <div id="page"> 
+    {% block content %}
+      <!-- Main Container -->
+      <section class="main-container col1-layout bounceInUp animated">
+        <div class="main container">
+          <div class="account-login">
+            <div class="page-title">
+              <h1>Login</h1>
+            </div>
+            <fieldset class="col2-set">
+              <legend>Login or Create an Account</legend>
+                <div class="content">
+                  <form method="POST" id="login-form">
+                    {% include 'messages.html' %}
+                    {% csrf_token %}
+                    {% if form.errors %}
+                      <div class="alert alert-danger alert-dismissible" role="alert">
+                          <div id="form_errors">
+                              {% for key, value in form.errors.items %}
+                                  <strong>{{ value }}</strong>
+                              {% endfor %}
+                          </div>
+                          <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                          </button>
+                      </div>
+                    {% endif %}
+                    <ul class="form-list row">
+                      <li class="col-md-6">
+                        {{ form.username.label }}
+                        {{ form.username }}
+                      </li>
+                      <li class="col-md-6">
+                        {{ form.password.label }}
+                        {{ form.password }}
+                      </li>
+                    </ul>
+                    <div class="buttons-set">
+                      <button id="login" type="submit" class="button login"><span>Login</span></button>
+                      <a class="forgot-word" href="{% url 'password_reset' %}">Forgot Your Password?</a>
+                      If you don't have an account, <a href="{% url 'register' %}"><span>Register</span></a>
+                    </div>
+                    <br>
+                    <button class="btn btn-danger mb-2">
+                      <a href="{% url 'social:begin' 'google-oauth2' %}" style="color: white;">
+                        Login with Google
+                      </a>
+                    </button>
+                    <br><br>
+                    <button class="btn btn-primary mb-2">
+                        <a href="{% url 'social:begin' 'facebook' %}" style="color: white;">
+                          Login with Facebook 
+                        </a>
+                    </button>
+                  </form>
+                </div>
+            </fieldset>
+          </div>
+        </div>
+      </section>
+      <!-- Main Container End --> 
+    {% endblock %}
+  </div>
+
+{% block js %}
+  <script type="text/javascript" src="{% static 'js/parallax.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/jquery.flexslider.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/cloud-zoom.js' %}"></script>
+  <script src="{% static 'js/login.js' %}"></script>
+{% endblock %}

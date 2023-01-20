@@ -1,0 +1,118 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>Superb, premium HTML5 &amp; CSS3 template</title>
+{% endblock %}
+
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/internal.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}" media="all">
+{% endblock %}
+
+
+<body class="inner-page">
+<div id="page"> 
+  
+  
+  
+{% block content %}
+  <!-- Main Container -->
+  <section class="main-container col1-layout">
+    <div class="main container">
+      <div class="col-main">
+        <div class="cart">
+          <div class="page-title">
+            <h1>Shopping Cart</h1>
+          </div>
+          <div class="table-responsive">
+            <form method="POST">
+              {% csrf_token %}
+              <fieldset>
+                <table class="data-table cart-table" id="shopping-cart-table">
+                  <thead>
+                    <tr class="first last">
+                      <th rowspan="1">&nbsp;</th>
+                      <th rowspan="1"><span class="nobr">Product Name</span></th>
+                      <th colspan="1" class="a-center"><span class="nobr">Unit Price</span></th>
+                      <th class="a-center " rowspan="1">Qty</th>
+                      <th colspan="1" class="a-center">Subtotal</th>
+                      <th class="a-center" rowspan="1">Delete</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    {% for item in baskets %}
+                      <tr class="first odd">
+                        <td class="image"><a class="product-image" title="" href="{% url 'product_detail' item.product.pk %}"><img width="75" height="75" alt="Women's Crepe Printed Black" src="{{ item.product.cover_image.url }}"></a></td>
+                        <td><h2 class="product-name"> <a href="{% url 'product_detail' item.product.pk %}">{{ item.product.product.name }}</a> </h2></td>
+                        {% if item.product.product.in_sale %}
+                          <td class="a-center hidden-table"><span class="cart-price"> <span class="price">${{ item.product.product.new_price|stringformat:".2f" }}</span> </span></td>
+                        {% else %}
+                          <td class="a-center hidden-table"><span class="cart-price"> <span class="price">${{ item.product.product.price|stringformat:".2f" }}</span> </span></td>
+                        {% endif %}
+                        <td class="a-center movewishlist"><span class="input-text qty"><span class="price">{{ item.quantity }}</span></span></td>
+                        <td class="a-center movewishlist"><span class="cart-price"> <span class="price">${{ item.get_subtotal|stringformat:".2f" }}</span> </span></td>
+                        <td class="a-center last"><a class="button remove-item basket-remove" title="Remove item" onclick = "removeBasket($(this).attr('data'))" href="{% url 'shopping_cart' %}" data="{{ item.product.pk }}"><span><span>Remove item</span></span></a></td>
+                      </tr>
+                    {% endfor %}
+                  </tbody>
+                  <tfoot>
+                    <tr class="first last">
+                      <td class="a-right last" colspan="50">
+                        <a href="{% url 'shopping_cart' %}" class="button btn-update" title="Update Cart" value="update_qty" style="padding: 10px;"><span class="text-danger">Update Cart</span></button>
+                        <a href="{% url 'product_list' %}" class="button btn-update" title="Continue Shopping" type="button" style="padding: 10px;"><span class="text-danger">Continue Shopping</span></a>
+                    </tr>
+                  </tfoot>
+                </table>
+              </fieldset>
+            </form>
+          </div>
+          <!-- BEGIN CART COLLATERALS -->
+          <div class="cart-collaterals row">
+            <div class="col-sm-4">
+              <div class="totals">
+                <h3>Shopping Cart Total</h3>
+                <div class="inner">
+                  <table class="table shopping-cart-table-total" id="shopping-cart-totals-table">
+                    <colgroup>
+                    <col>
+                    <col width="1">
+                    </colgroup>
+                    <tfoot>
+                      <tr>
+                        <td colspan="1" class="a-left"><strong>Grand Total</strong></td>
+                        <td class="a-right"><strong><span class="price">${{ grand_total|stringformat:".2f" }}</span></strong></td>
+                      </tr>
+                    </tfoot>
+                  </table>
+                  <ul class="checkout">
+                    <li>
+                      <a class="button btn-proceed-checkout" href="{% url 'checkout' %}" title="Proceed to Checkout" style="padding: 10px 100px; background-color: rgba(145, 96, 5, 0.589);"><span>Proceed to Checkout</span></a>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+              <!--inner--> 
+              
+            </div>
+          </div>
+          
+          <!--cart-collaterals--> 
+          
+        </div>
+      </div>
+    </div>
+  </section>
+
+{% endblock %}
+  
+</div>
+
+<!-- JavaScript --> 
+
+{% block js %}
+  <script type="text/javascript" src="{% static 'js/parallax.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/jquery.flexslider.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/cloud-zoom.js' %}"></script>
+  <script src="{% static 'js/wishlist.js' %}"></script>
+{% endblock %}

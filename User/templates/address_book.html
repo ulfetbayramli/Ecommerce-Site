@@ -1,0 +1,85 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>Superb, premium HTML5 &amp; CSS3 template</title>
+{% endblock %}
+
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/internal.css' %}">
+{% endblock %}
+
+<body class="customer-account-index customer-account inner-page">
+<div id="page"> 
+
+  {% block content %}
+    <!-- Main Container -->
+    <section class="main-container col2-right-layout">
+      <div class="main container">
+        <div class="row">
+          <div class="col-main col-sm-9 animated" style="visibility: visible;">
+            <div class="my-account">
+              <div class="page-title">
+                <h1>Address Book</h1>
+                <button style="float:right;margin-top:4px;" type="button" title="Add New Address" class="button"><a href="{% url 'address_info' %}">Add New Address</a></button>
+              </div>
+              <div class="col2-set ">
+                <div class="col-1 addresses-primary ">
+                  <h4>Default Addresses</h4>
+                  <ol>
+                    <li class="item">
+                      <h4>Default Billing Address</h4>
+                      <address>
+                          {{ billing_address.first_name }} {{  billing_address.last_name }}<br>
+                          {{ billing_address.telephone }}<br>
+                          {{ billing_address.email }}<br>
+                          {{ billing_address.street_address }}<br>
+                          {{ billing_address.country }}<br>
+                          {{ billing_address.city }}<br>
+                          {{ billing_address.state }}
+                          {{ billing_address.zip }}
+                      </address>
+                      <p><a href="{% url 'billing_info' %}">Change Billing Address</a></p>
+                    </li>
+                    <br>
+                    <li class="item">
+                      <h4>Default Shipping Address</h4>
+                      <address>
+                        {{ shipping_address.first_name }} {{  shipping_address.last_name }}<br>
+                        {{ shipping_address.telephone }}<br>
+                        {{ shipping_address.email }}<br>
+                        {{ shipping_address.street_address }}<br>
+                        {{ shipping_address.country }}<br>
+                        {{ shipping_address.city }}<br>
+                        {{ shipping_address.state }}
+                        {{ shipping_address.zip }}
+                      </address>
+                      <p><a href="{% url 'shipping_info' %}">Change Shipping Address</a></p>
+                    </li>
+                  </ol>
+                </div>
+                <div class="col-2 addresses-additional">
+                  <h4>Additional Address Entries</h4>
+                  <ol>
+                    <li class="item empty1">
+                      <p>You have no additional address entries in your address book.</p>
+                    </li>
+                  </ol>
+                </div>
+              </div>
+            </div>
+          </div>
+          <!--col-right sidebar col-sm-3--> 
+        </div>
+      </div>
+    </section>
+    <!-- Main Container End --> 
+  {% endblock %}
+</div>
+
+
+{% block js %}
+  <script type="text/javascript" src="{% static 'js/parallax.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/jquery.flexslider.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/cloud-zoom.js' %}"></script>
+{% endblock %}

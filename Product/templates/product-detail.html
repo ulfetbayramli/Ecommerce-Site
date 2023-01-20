@@ -1,0 +1,320 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>Superb, premium HTML5 &amp; CSS3 template</title>
+{% endblock %}
+
+<body class="inner-page">
+<div id="page"> 
+  {% block content %}
+    <!-- Main Container -->
+    <section class="main-container col1-layout wow bounceInUp animated">
+      <div class="main container">
+        <div class="col-main">
+          <div class="row">
+            <div class="product-view">
+              <div class="product-next-prev"> <a class="product-next" href="#"><span></span></a> <a class="product-prev" href="#"><span></span></a> </div>
+              <div class="product-essential">
+                <form method="post" id="product_addtocart_form">
+                  <input name="form_key" value="6UbXroakyQlbfQzK" type="hidden">
+                  <div class="product-img-box col-sm-4 col-xs-12">
+                    <div class="product-image">
+                      <div class="large-image"><img src="{{ product.cover_image.url }}" alt="product image"></div>
+                      <div class="flexslider flexslider-thumb">
+                        <ul class="previews-list slides">
+                          {% for image in images %}
+                            {% for image_product in image.images_of_products.all %}
+                              {% if image_product.pk == product.pk %}
+                                <li><a href="{{ image.image.url }}" class='cloud-zoom-gallery' rel="useZoom: 'zoom1', smallImage:' {{ image.image.url }}'"><img src="{{ image.image.url }}" alt = "Thumbnail 1"/></a></li>
+                              {% endif %}
+                            {% endfor %}
+                          {% endfor %}
+                        </ul>
+                      </div>
+                    </div>
+                    <!-- end: more-images --> 
+                  </div>
+                  <div class="product-shop col-sm-8 col-xs-12">
+                    <div class="product-name">
+                      <h1>{{ product.product.name }}</h1>
+                    </div>
+                    <div class="ratings">
+                      <div class="rating-box">
+                        <div style="width:60%" class="rating"></div>
+                      </div>
+                      <p class="rating-links"> <a href="#">1 Review(s)</a> <span class="separator">|</span> <a href="#">Add Your Review</a> </p>
+                    </div>
+                    <div class="price-block">
+                      <div class="price-box">
+                        {% if product.product.in_sale %}
+                            <p class="special-price"> <span class="price-label"></span> <span class="price"> ${{ product.product.new_price|stringformat:".2f"  }}</span> </p> <p class="old-price"> <span class="price-label"></span> <span class="price"> ${{ product.product.price|stringformat:".2f"  }} </span> </p>
+                          {% else %}
+                            <p class="special-price"> <span class="price-label"></span> <span class="price"> ${{ product.product.price|stringformat:".2f"  }}</span> </p>
+                          {% endif %}
+                      </div>
+                      <p class="availability in-stock pull-right"><span>In Stock</span></p>
+                    </div>
+                    <div class="short-description">
+                      <h2>Quick Overview</h2>
+                      <p>{{ product.product.overview }}</p>
+                    </div>
+                    <div class="add-to-box">
+                      <div class="add-to-cart">
+                        <div class="pull-left">
+                          <div class="custom pull-left">
+                            <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value--;return false;" class="reduced items-count" type="button"><i class="fa fa-minus">&nbsp;</i></button>
+                            <input type="text" class="input-text qty" title="Qty" value="1" maxlength="12" id="qty" name="qty">
+                            <button onClick="var result = document.getElementById('qty'); var qty = result.value; if( !isNaN( qty )) result.value++;return false;" class="increase items-count" type="button"><i class="fa fa-plus">&nbsp;</i></button>
+                          </div>
+                        </div>
+                        <button onclick = "AddToBasketInDetail($(this).attr('data'))" class="button btn-cart" id="add-to-basket" title="Add to Cart" type="button" data="{{ product.pk }}"><span>Add to Cart</span></button>
+                      </div>
+                      <div class="email-addto-box">
+                        <ul class="add-to-links">
+                          <li class="link-wishlist" onclick = "functionAddToWishlist($(this).attr('data'))" style="cursor: pointer;" id="add-wishlist" data="{{ product.pk }}"><span>Add to Wishlist</span></li>
+                        </ul>
+                      </div>
+                    </div>
+                    <div>
+                      <ul class="list-unstyled" style="margin-top: 30px; padding-left: 10px;">
+                        {% for color in colors %}
+                          <li><a href="{% url 'product_detail' color.pk %}" style="font-size: 20px;">{{ color.color.name }}</a></li>
+                        {% endfor %}
+                      </ul>
+                    </div>
+                  </div>
+                </form>
+              </div>
+              <div class="product-collateral col-lg-12 col-sm-12 col-xs-12 bounceInUp animated">
+                <div class="add_info">
+                  <ul id="product-detail-tab" class="nav nav-tabs product-tabs">
+                    <li class="active"> <a href="#product_tabs_description" data-toggle="tab"> Product Details </a> </li>
+                    <li> <a href="#reviews_tabs" data-toggle="tab">Reviews</a> </li>
+                  </ul>
+                  <div id="productTabContent" class="tab-content">
+                    <div class="tab-pane fade in active" id="product_tabs_description">
+                      <div class="std">
+                        <p>{{ product.product.details }}</p>
+                      </div>
+                    </div>
+                    <div class="tab-pane fade" id="reviews_tabs">
+                      <div class="box-collateral box-reviews" id="customer-reviews">
+                        <div class="box-reviews1">
+                          <div class="form-add">
+                            <form id="review-form" method="POST" action="">
+                              {% csrf_token %}
+                              <h3>Write Your Own Review</h3>
+                              <fieldset>
+                                <h4>How do you rate this product? <em class="required">*</em></h4>
+                                <span id="input-message-box"></span>
+                                <table id="product-review-table" class="data-table">
+                                  <thead>
+                                    <tr class="first last">
+                                      <th>&nbsp;</th>
+                                      <th><span class="nobr">1 *</span></th>
+                                      <th><span class="nobr">2 *</span></th>
+                                      <th><span class="nobr">3 *</span></th>
+                                      <th><span class="nobr">4 *</span></th>
+                                      <th><span class="nobr">5 *</span></th>
+                                    </tr>
+                                  </thead>
+                                  <tbody>
+                                    <tr class="first odd">
+                                      <th>Price</th>
+                                      <td class="value"><input type="radio" class="radio" value="1" id="Price_1" name="price_review"></td>
+                                      <td class="value"><input type="radio" class="radio" value="2" id="Price_2" name="price_review"></td>
+                                      <td class="value"><input type="radio" class="radio" value="3" id="Price_3" name="price_review"></td>
+                                      <td class="value"><input type="radio" class="radio" value="4" id="Price_4" name="price_review"></td>
+                                      <td class="value"><input type="radio" class="radio" value="5" id="Price_5" name="price_review"></td>
+                                    </tr>
+                                    <tr class="even">
+                                      <th>Value</th>
+                                      <td class="value"><input type="radio" class="radio" value="1" id="Value_1" name="value_review"></td>
+                                      <td class="value"><input type="radio" class="radio" value="2" id="Value_2" name="value_review"></td>
+                                      <td class="value"><input type="radio" class="radio" value="3" id="Value_3" name="value_review"></td>
+                                      <td class="value"><input type="radio" class="radio" value="4" id="Value_4" name="value_review"></td>
+                                      <td class="value"><input type="radio" class="radio" value="5" id="Value_5" name="value_review"></td>
+                                    </tr>
+                                    <tr class="last odd">
+                                      <th>Quality</th>
+                                      <td class="value"><input type="radio" class="radio" value="1" id="Quality_1" name="quality_review"></td>
+                                      <td class="value"><input type="radio" class="radio" value="2" id="Quality_2" name="quality_review"></td>
+                                      <td class="value"><input type="radio" class="radio" value="3" id="Quality_3" name="quality_review"></td>
+                                      <td class="value"><input type="radio" class="radio" value="4" id="Quality_4" name="quality_review"></td>
+                                      <td class="value"><input type="radio" class="radio" value="5" id="Quality_5" name="quality_review"></td>
+                                    </tr>
+                                  </tbody>
+                                </table>
+                                <input type="hidden" value="" class="validate-rating" name="validate_rating">
+                                <div class="review1">
+                                  <ul class="form-list">
+                                    <li>
+                                      <label class="required" for="nickname_field">Nickname<em>*</em></label>
+                                      <div class="input-box">
+                                        <input type="text" class="input-text" id="nickname_field" name="nickname">
+                                      </div>
+                                    </li>
+                                    <li>
+                                      <label class="required" for="summary_field">Summary<em>*</em></label>
+                                      <div class="input-box">
+                                        <input type="text" class="input-text" id="summary_field" name="summary">
+                                      </div>
+                                    </li>
+                                  </ul>
+                                </div>
+                                <div class="review2">
+                                  <ul>
+                                    <li>
+                                      <label class="required " for="review_field">Review<em>*</em></label>
+                                      <div class="input-box">
+                                        <textarea rows="3" cols="5" id="review_field" name="product_review"></textarea>
+                                      </div>
+                                    </li>
+                                  </ul>
+                                  <div class="buttons-set">
+                                    <button class="button submit" title="Submit Review" type="submit"><span>Submit Review</span></button>
+                                  </div>
+                                </div>
+                              </fieldset>
+                            </form>
+                          </div>
+                        </div>
+                        <div class="box-reviews2">
+                          <h3>Customer Reviews</h3>
+                          <div class="box visible">
+                            <ul>
+                              {% for review in reviews %}
+                                <li>
+                                  <table class="ratings-table">
+                                    <colgroup>
+                                    <col width="1">
+                                    <col>
+                                    </colgroup>
+                                    <tbody>
+                                      <tr>
+                                        <th>Value</th>
+                                        <td><div class="rating-box">
+                                            <div class="rating" style="width: {{ review.get_value_review_display }}%;"></div>
+                                          </div></td>
+                                      </tr>
+                                      <tr>
+                                        <th>Quality</th>
+                                        <td><div class="rating-box">
+                                            <div class="rating" style="width: {{ review.get_quality_review_display }}%;"></div>
+                                          </div></td>
+                                      </tr>
+                                      <tr>
+                                        <th>Price</th>
+                                        <td><div class="rating-box">
+                                            <div class="rating" style="width: {{ review.get_price_review_display }}%;"></div>
+                                          </div></td>
+                                      </tr>
+                                    </tbody>
+                                  </table>
+                                  <div class="review">
+                                    <h6><a href="#">{{ review.summary }}</a></h6>
+                                    <small>Review by <span>{{ review.nickname }} </span>on {{ review.review_date|date:"j/n/Y" }} </small>
+                                    <div class="review-txt"> {{ review.product_review }}</div>
+                                  </div>
+                                </li>
+                              {% endfor %}
+                            </ul>
+                          </div>
+                          <div class="actions"> <a class="button view-all" id="revies-button" href="#"><span><span>View all</span></span></a> </div>
+                        </div>
+                        <div class="clear"></div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Main Container End --> 
+    <!-- Related Products Slider -->
+    <section class="related-pro wow bounceInUp animated">
+      <div class="container">
+        <div class="slider-items-products">
+          <div class="new_title center">
+            <h2>Related Products</h2>
+          </div>
+          <div id="related-products-slider" class="product-flexslider hidden-buttons">
+            <div class="slider-items slider-width-col4 products-grid">
+              {% for r_item in r_items %}
+                <div class="item">
+                  <div class="item-inner">
+                    <div class="item-img">
+                      <div class="item-img-info"><a href="{% url 'product_detail' r_item.pk %}" title="Retis lapen casen" class="product-image"><img src="{{ r_item.cover_image.url }}" alt="Retis lapen casen"></a></div>
+                    </div>
+                    <div class="item-info">
+                      <div class="info-inner">
+                        <div class="item-title"><a href="{% url 'product_detail' r_item.pk %}" title="Retis lapen casen">{{ r_item.product.name }}</a> </div>
+                        <div class="item-content">
+                          <div class="item-price">
+                            {% if r_item.product.in_sale %}
+                              <p class="special-price"> <span class="price-label"></span> <span class="price"> ${{ r_item.product.new_price|stringformat:".2f"  }}</span> </p> <p class="old-price"> <span class="price-label"></span> <span class="price"> ${{ r_item.product.price|stringformat:".2f"  }} </span> </p>
+                            {% else %}
+                              <p class="special-price"> <span class="price-label"></span> <span class="price"> ${{ r_item.product.price|stringformat:".2f"  }}</span> </p>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+    <!-- Related Products Slider End --> 
+    <!-- Upsell Product Slider -->
+    <section class="upsell-pro wow bounceInUp animated">
+      <div class="container">
+        <div class="slider-items-products">
+          <div class="new_title center">
+            <h2>Upsell Products</h2>
+          </div>
+          <div id="upsell-products-slider" class="product-flexslider hidden-buttons">
+            <div class="slider-items slider-width-col4 products-grid">
+              {% for u_item in u_items %}
+                <div class="item">
+                  <div class="item-inner">
+                    <div class="item-img">
+                      <div class="item-img-info"><a href="{% url 'product_detail' u_item.pk %}" title="Retis lapen casen" class="product-image"><img src="{{ u_item.cover_image.url }}" alt="Retis lapen casen"></a></div>
+                    </div>
+                    <div class="item-info">
+                      <div class="info-inner">
+                        <div class="item-title"><a href="{% url 'product_detail' u_item.pk %}" title="Retis lapen casen">{{ u_item.product.name }}</a> </div>
+                        <div class="item-content">
+                          <div class="item-price">
+                            {% if u_item.product.in_sale %}
+                              <p class="special-price"> <span class="price-label"></span> <span class="price"> ${{ u_item.product.new_price|stringformat:".2f"  }}</span> </p> <p class="old-price"> <span class="price-label"></span> <span class="price"> ${{ u_item.product.price|stringformat:".2f"  }} </span> </p>
+                            {% else %}
+                              <p class="special-price"> <span class="price-label"></span> <span class="price"> ${{ u_item.product.price|stringformat:".2f"  }}</span> </p>
+                            {% endif %}
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              {% endfor %}
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+  {% endblock %}
+</div>
+
+{% block js %}
+  <script type="text/javascript" src="{% static 'js/parallax.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/jquery.flexslider.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/cloud-zoom.js' %}"></script>
+
+  {% endblock %}

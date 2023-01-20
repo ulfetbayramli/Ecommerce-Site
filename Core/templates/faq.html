@@ -1,0 +1,45 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>FAQ</title>
+{% endblock %}
+
+<!-- CSS Style -->
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/internal.css' %}">
+{% endblock %}
+
+<body>
+  <div class="inner-page">
+  <!-- Home Slider Block -->
+    {% block content %}
+      <section class="main-container col1-layout">
+        <div class="main container">
+          <div class="col-main">
+            <div class="cart wow bounceInUp animated">
+              <div class="page-title">
+                <h2>Frequently Asked Questions</h2>
+              </div>
+              <div class="panel-group accordion-faq" id="faq-accordion">
+                {% for faq in faqs %}
+                  <div class="panel">
+                    <div class="panel-heading"> <a data-toggle="collapse" data-parent="#faq-accordion" href="#question{{faq.id}}" class="collapsed"> <span class="arrow-down">+</span> <span class="arrow-up">&#8211;</span> Lorem ipsum dolor sit amet, consectetuer adipiscing elit. Donec eros tellus, scelerisque nec, rhoncus eget, laoreet sit amet, nunc. Ut sit amet turpis. In est arcu, sollicitudin eu, vehicula venenatis, tempor vitae, est. </a> </div>
+                    <div id="question{{faq.id}}" class="panel-collapse collapse">
+                      <div class="panel-body"> Vestibulum justo. Nulla mauris ipsum, convallis ut, vestibulum eu, tincidunt vel, nisi. Curabitur molestie euismod erat. Proin eros odio, mattis rutrum, pulvinar et, egestas vitae, magna. Integer semper, velit ut interdum malesuada, diam dolor pellentesque lacus, vitae commodo orci nisi et sem. Pellentesque adipiscing nisi. Nulla facilisi. Mauris lacinia lectus sit amet felis. Aliquam erat volutpat. Nulla porttitor tortor at nisl. Nam lectus nulla, bibendum pretium, dictum a, mattis nec, dolor. Nullam id justo sed diam aliquam tincidunt. Duis sollicitudin, dui ac commodo iaculis, mi risus sagittis odio, vel ultrices enim sem ut pede. Aenean quam. Nulla neque purus, ullamcorper nec, eleifend at, fermentum ut, turpis. Mauris et ligula quis erat dignissim imperdiet. Integer ligula magna, dictum et, pulvinar non, ultricies ac, nibh. </div>
+                    </div>
+                  </div>
+                {% endfor %}
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    {% endblock %}
+
+  </div>
+
+{% block js %}
+  <script type="text/javascript" src="{% static 'js/parallax.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.flexslider.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/cloud-zoom.js' %}"></script>
+{% endblock %}

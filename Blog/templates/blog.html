@@ -1,0 +1,99 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>Superb premium HTML5 &amp; CSS3 template</title>
+{% endblock %}
+
+<!-- CSS Style -->
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/blogmate.css' %}">
+{% endblock %}
+
+<body class="blogmate-index-index rtl inner-page">
+<div id="page"> 
+  <!-- Main Container -->
+  {% block content %}
+    <section class="main-container col2-right-layout bounceInUp animated">
+      <div class="main container">
+        <div class="row">
+          <div class="col-main col-sm-9">
+            <div class="blog-wrapper latest-blog" id="main">
+              <div class="site-content" id="primary">
+                <div role="main" id="content">
+                  {% for post in posts %}
+                    <div class="blog_post">
+                      <div class="thumbnail">
+                        <h2>
+                          <a href="{{ post.get_absolute_url }}">{{ post.title }}</a> 
+                        </h2>
+                        <div class="featured-img">
+                          <img src="{{ post.image.url }}" alt="blog post">
+                        </div>
+                      </div>
+                      <div class="entry-meta">
+                        <a href="{% url 'blogs' %}?author={{post.author.author_slug}}">
+                          <span class="author-avatar byline"><img alt="" src="{{ post.author.author_image.url }}" class="avatar avatar-96 photo">{{ post.author }}</span> <span class="timestamp">{{ post.date|date:"F j, Y"}}</span>
+                        </a>
+                      </div>
+                      <p>{{ post.desc|truncatechars:550 }}</p>
+                      <a href="{{ post.get_absolute_url }}" class="continue-btn">Continue Reading <span>›</span></a>
+                    </div>
+                  {% endfor %}
+                </div>
+              </div>
+              <br><br>
+            </div>
+          </div>
+          <aside class="col-right sidebar col-sm-3">
+            <div role="complementary" class="widget_wrapper13" id="secondary">
+              <div class="popular-posts widget widget__sidebar" id="recent-posts-4">
+                <h3 class="widget-title">Most Popular Posts</h3>
+                <div class="widget-content">
+                  <ul class="posts-list unstyled clearfix">
+                    {% for p_post in p_posts %}
+                      <li>
+                        <figure class="featured-thumb"> <a href="{{ p_post.get_absolute_url }}"> <img width="80" height="53" alt="blog image" src="{{ p_post.image.url }}"></a></figure>
+                        <!--featured-thumb-->
+                        <h4><a title="Pellentesque posuere" href="{{ p_post.get_absolute_url }}">{{ p_post.title }}</a></h4>
+                        <p class="post-meta"><i class="icon-calendar"></i>
+                          <time datetime="2014-07-10T07:09:31+00:00" class="entry-date">{{ p_post.date|date:"N j, Y" }}</time>. 
+                        </p>
+                      </li>
+                    {% endfor %}
+                  </ul>
+                </div>
+              </div>
+              <div class="popular-posts widget widget_categories" id="categories-2">
+                <h3 class="widget-title">Categories</h3>
+                <ul>
+                  {% for category in categories %}
+                    <li class="cat-item cat-item-19599"><a href="{% url 'blogs' %}?category={{category.name}}">{{ category }}</a></li>
+                  {% endfor %}
+                </ul>
+              </div>
+              <div class="popular-posts widget widget_categories" id="categories-2">
+                <h3 class="widget-title">Authors</h3>
+                <ul class="posts-list unstyled clearfix">
+                  {% for author in authors %}
+                  <li style='padding: 5px;'>
+                    <span class="author-avatar byline"> <a href="{% url 'blogs' %}?author={{author.author.author_slug}}"> <img class="avatar avatar-96 photo" alt="author image" src="{{ author.author_image.url }}"></a></span>
+                    <a href="{% url 'blogs' %}?author={{author.author_slug}}">{{ author }}</a>
+                  </li>
+                  {% endfor %}
+                </ul>
+              </div>
+            </div>
+          </aside>
+        </div>
+      </div>
+    </section>
+  {% endblock %}
+  <!-- Main Container End --> 
+</div>
+
+{% block js %}
+  <script type="text/javascript" src="{% static 'js/parallax.js' %}"></script>
+  <script type="text/javascript" src="{% static 'js/jquery.flexslider.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/cloud-zoom.js' %}"></script>
+{% endblock %}

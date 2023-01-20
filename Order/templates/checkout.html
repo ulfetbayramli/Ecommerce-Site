@@ -1,0 +1,142 @@
+﻿{% extends 'base.html' %}
+{% load static %}
+{% block title %}
+  <title>Superb, premium HTML5 &amp; CSS3 template</title>
+{% endblock %}
+
+
+{% block css %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/internal.css' %}">
+  <link rel="stylesheet" type="text/css" href="{% static 'css/animate.css' %}" media="all">
+{% endblock %}
+
+
+<body class="onestepcheckout-index-index inner-page">
+<div id="page"> 
+  
+  
+{% block content %}
+  <!-- Main Container -->
+  <section class="main-container col2-right-layout bounceInUp animated">
+    <div class="main container">
+      <div class="row">
+        <div class="col-main col-sm-9">
+          <div class="page-title">
+            <h1>Checkout</h1>
+          </div>
+          <ol class="one-page-checkout" id="checkoutSteps">
+            <li id="opc-billing" class="section allow active">
+              <div class="step-title">
+                <h3>Checkout Method</h3>
+                <!--<a href="#">Edit</a> --> 
+              </div>
+              <div id="checkout-step-billing" class="step a-item" >
+                <form id="co-billing-form" method="POST">
+                  {% csrf_token %}
+                  <fieldset class="group-select">
+                    <ul>
+                      <li>
+                        <label for="billing-address-select">Select a billing address from your address book or enter a new address.</label>
+                        <br>
+                        <select name="address" id="billing-address-select" class="address-select">
+                          {% for address in addresses %}
+                            <option value="{{ address.user.username }}'s order to {{ address.country}}, {{ address.city }}, {{address.province}}, {{ address.street_address }}">{{ address.country}}, {{ address.city }}, {{address.province}}, {{ address.street_address }}</option>
+                          {% endfor %}
+                        </select>
+                        <!-- <button type="submit" class="button submit" style="margin-left: 15px;"><span>Finish Order</span></button> -->
+                        <p><a href="{% url 'address_info' %}">Add New Address</a></p>
+                      </li>
+                    </ul>
+                    <div id="paypal-button-container"></div>
+                  </fieldset>
+                </form>
+              </div>
+            </li>
+          </ol>
+        </div>
+
+        <aside class="col-right sidebar col-sm-3">
+          <div class="block block-progress">
+            <div class="block-title ">Your Checkout</div>
+            <div class="block-content">
+              <dl>
+                <dt class="complete"> Billing Address <span class="separator">|</span> <a href="{% url 'billing_info' %}">Change</a> </dt>
+                <dd class="complete">
+                  <address>
+                    {{ billing_address.first_name }} {{  billing_address.last_name }}<br>
+                    {{ billing_address.telephone }}<br>
+                    {{ billing_address.email }}<br>
+                    {{ billing_address.street_address }}<br>
+                    {{ billing_address.country }}<br>
+                    {{ billing_address.city }}<br>
+                    {{ billing_address.state }}
+                    {{ billing_address.zip }}
+                  </address>
+                </dd>
+                <dt class="complete"> Shipping Address <span class="separator">|</span> <a href="{% url 'shipping_info' %}">Change</a> </dt>
+                <dd class="complete">
+                  <address>
+                    {{ shipping_address.first_name }} {{  shipping_address.last_name }}<br>
+                    {{ shipping_address.telephone }}<br>
+                    {{ shipping_address.email }}<br>
+                    {{ shipping_address.street_address }}<br>
+                    {{ shipping_address.country }}<br>
+                    {{ shipping_address.city }}<br>
+                    {{ shipping_address.state }}
+                    {{ shipping_address.zip }}
+                  </address>
+                </dd>
+              </dl>
+            </div>
+          </div>
+        </aside>
+      </div>
+    </div>
+  </section>
+  <!-- Main Container End --> 
+{% endblock %}
+
+</div>
+
+{% block js %}
+  <script type="text/javascript" src="{% static 'js/parallax.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/jquery.flexslider.js' %}"></script> 
+  <script type="text/javascript" src="{% static 'js/cloud-zoom.js' %}"></script>
+
+
+  <!-- Replace "test" with your own sandbox Business account app client ID -->
+  <script src="https://www.paypal.com/sdk/js?client-id=Aa-PDNGNDK8SSWBLx2ddb9k5-jtX7J7ecjqb_HkGmcuXeP-8we3xYc3q9lrFTCJkUwX5me8qEMnNeFCx&currency=USD"></script>
+
+  <script>
+
+      var total = '{{grand_total}}'
+
+      
+      // Render the PayPal button into #paypal-button-container
+      paypal.Buttons({
+           // Sets up the transaction when a payment button is clicked
+          createOrder: function(data, actions) {
+              return actions.order.create({
+                  purchase_units: [{
+                      amount: {
+                          value:parseFloat(total).toFixed(2)
+                      }
+                  }]
+              });
+          },
+
+          // Finalize the transaction after payer approval
+          onApprove: function(data, actions) {
+              return actions.order.capture().then(function(orderData) {
+                  // Successful capture! For demo purposes:
+                  console.log('Capture result', orderData, JSON.stringify(orderData, null, 2));
+                  const transaction = orderData.purchase_units[0].payments.captures[0];
+                  alert('Transaction '+ transaction.status + ': ' + transaction.id + '\n\nSee console for all available details');
+                  // 
+              }
+            );
+          }
+      }).render('#paypal-button-container');
+      
+  </script>
+{% endblock %}
