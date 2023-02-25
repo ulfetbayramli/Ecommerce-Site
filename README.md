@@ -1,5 +1,5 @@
 # SUPERB E-commerce website
-You can sell and buy any product here.
+You can sell and buy any product here
 
 # To Do List
 - Sign up, Sign in and Logout your account
