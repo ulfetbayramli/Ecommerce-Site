@@ -35,7 +35,7 @@ urlpatterns += [
     path('api/token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
     path('openapi/', get_schema_view(
         title="SuperB",
-        description="API developers hpoing to use our service"
+        description="API developers hoping to use our service"
     ), name='openapi-schema'),
     path('docs/', TemplateView.as_view(
         template_name='documentation.html',

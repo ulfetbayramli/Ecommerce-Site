@@ -32,7 +32,7 @@ if DEBUG:
     import asyncio
     asyncio.set_event_loop_policy(asyncio.WindowsSelectorEventLoopPolicy())
 
-ALLOWED_HOSTS = ["ulfetb.pythonanywhere.com"]
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition

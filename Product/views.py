@@ -70,7 +70,6 @@ class ProductDetailView(DetailView, CreateView):
             product.save()
         return redirect('product_detail', pk=self.kwargs.get("pk"))
 
-#############
 # class ProductListView(ListView):
 #     model = Product_version
 #     template_name= "product-list.html"
@@ -95,6 +94,3 @@ class ProductDetailView(DetailView, CreateView):
 #             self.queryset = Product_version.objects.all()
 
 #         return self.queryset
-
-    
-#############################
